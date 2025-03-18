@@ -79,8 +79,8 @@ func (this *Server) Handler(conn net.Conn) {
 	}()
 
 	// 4. 监听用户是否超时
-	timer := time.NewTimer(time.Second * 10) // 创建定时器
-	defer timer.Stop()                       // 退出时释放资源
+	timer := time.NewTimer(time.Second * 300) // 创建定时器
+	defer timer.Stop()                        // 退出时释放资源
 
 	for {
 		select {
@@ -89,7 +89,7 @@ func (this *Server) Handler(conn net.Conn) {
 			if !timer.Stop() {
 				<-timer.C // 清空通道，防止旧数据影响
 			}
-			timer.Reset(time.Second * 10)
+			timer.Reset(time.Second * 300)
 
 		case <-timer.C:
 			// 超时处理
